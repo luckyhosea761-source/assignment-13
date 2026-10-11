@@ -1,0 +1,115 @@
+# Assignment 13 - Library Management System
+
+books = []
+
+while True:
+    print("\n===== LIBRARY MANAGEMENT SYSTEM =====")
+    print("1. Books")
+    print("2. Add Book")
+    print("3. Borrow Book")
+    print("4. Return Book")
+    print("5. Delete Book")
+    print("6. Search Book")
+    print("7. Exit")
+
+    choice = input("Enter your choice: ")
+
+    # View Books
+    if choice == "1":
+        if len(books) == 0:
+            print("No books available.")
+        else:
+            print("\nList of Books:")
+            for book in books:
+                print(book["Title"], "-", book["Status"])
+
+    # Add Book
+    elif choice == "2":
+        title = input("Enter book title: ")
+        author = input("Enter author name: ")
+
+        book = {
+            "Title": title,
+            "Author": author,
+            "Status": "Available"
+        }
+
+        books.append(book)
+        print("Book added successfully!")
+
+    # Borrow Book
+    elif choice == "3":
+        title = input("Enter book title to borrow: ")
+        found = False
+
+        for book in books:
+            if book["Title"].lower() == title.lower():
+                found = True
+
+                if book["Status"] == "Available":
+                    book["Status"] = "Borrowed"
+                    print("Book borrowed successfully!")
+                else:
+                    print("This book has already been borrowed.")
+                break
+
+        if not found:
+            print("Book not found.")
+
+    # Return Book
+    elif choice == "4":
+        title = input("Enter book title to return: ")
+        found = False
+
+        for book in books:
+            if book["Title"].lower() == title.lower():
+                found = True
+
+                if book["Status"] == "Borrowed":
+                    book["Status"] = "Available"
+                    print("Book returned successfully!")
+                else:
+                    print("This book was not borrowed.")
+                break
+
+        if not found:
+            print("Book not found.")
+
+    # Delete Book
+    elif choice == "5":
+        title = input("Enter book title to delete: ")
+        found = False
+
+        for book in books:
+            if book["Title"].lower() == title.lower():
+                books.remove(book)
+                found = True
+                print("Book deleted successfully!")
+                break
+
+        if not found:
+            print("Book not found.")
+
+    # Search Book
+    elif choice == "6":
+        title = input("Enter book title to search: ")
+        found = False
+
+        for book in books:
+            if title.lower() in book["Title"].lower():
+                print("\nBook Found!")
+                print("Title:", book["Title"])
+                print("Author:", book["Author"])
+                print("Status:", book["Status"])
+                found = True
+
+        if not found:
+            print("Book not found.")
+
+    # Exit
+    elif choice == "7":
+        print("Thank you for using the Library Management System!")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
